@@ -44,5 +44,5 @@ total_ips = net.num_addresses
 print(f"CIDR       : {net.with_prefixlen}")
 print(f"IP đầu     : {first_ip}")
 print(f"IP cuối    : {last_ip}")
-print(f"Tổng số IP : {total_ips}")
+print(f"Tổng số IP : {total_ips:,}")
 PY
