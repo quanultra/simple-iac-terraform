@@ -26,11 +26,11 @@ envs/
 │   ├── terraform.tfvars
 │   └── backend.hcl.example
 └── prod/
-	├── main.tf
-	├── variables.tf
-	├── outputs.tf
-	├── terraform.tfvars
-	└── backend.hcl.example
+ ├── main.tf
+ ├── variables.tf
+ ├── outputs.tf
+ ├── terraform.tfvars
+ └── backend.hcl.example
 ```
 
 ### Ý nghĩa các file trong mỗi môi trường
@@ -44,11 +44,13 @@ envs/
 ## 3) Quy ước backend state
 
 Mỗi môi trường phải có `key` riêng trong S3 backend:
+
 - dev: `simple-iac-terraform/dev/terraform.tfstate`
 - stg: `simple-iac-terraform/stg/terraform.tfstate`
 - prod: `simple-iac-terraform/prod/terraform.tfstate`
 
 Khuyến nghị dùng chung:
+
 - cùng một S3 bucket cho state
 - cùng một DynamoDB table để lock
 - tách key theo môi trường như trên
@@ -98,6 +100,7 @@ terraform destroy
 ```
 
 Lưu ý:
+
 - Chỉ destroy trong đúng thư mục môi trường cần xóa.
 - NAT Gateway phát sinh chi phí theo giờ.
 - Nếu S3 bucket có object và `s3_force_destroy = false`, destroy sẽ fail.
