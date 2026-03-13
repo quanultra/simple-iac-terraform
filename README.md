@@ -3,6 +3,7 @@
 Project này dùng để thực hành Infrastructure as Code với Terraform trên AWS, theo cấu trúc gần với cách triển khai thực tế trong team.
 
 Hạ tầng mẫu bao gồm:
+
 - VPC
 - 2 Public Subnets + 2 Private Subnets
 - Network ACLs (public/private)
@@ -44,25 +45,25 @@ simple-iac-terraform/
 │       ├── variables.tf
 │       └── outputs.tf
 └── envs/
-	├── README.md
-	├── dev/
-	│   ├── main.tf
-	│   ├── variables.tf
-	│   ├── outputs.tf
-	│   ├── terraform.tfvars
-	│   └── backend.hcl.example
-	├── stg/
-	│   ├── main.tf
-	│   ├── variables.tf
-	│   ├── outputs.tf
-	│   ├── terraform.tfvars
-	│   └── backend.hcl.example
-	└── prod/
-		├── main.tf
-		├── variables.tf
-		├── outputs.tf
-		├── terraform.tfvars
-		└── backend.hcl.example
+ ├── README.md
+ ├── dev/
+ │   ├── main.tf
+ │   ├── variables.tf
+ │   ├── outputs.tf
+ │   ├── terraform.tfvars
+ │   └── backend.hcl.example
+ ├── stg/
+ │   ├── main.tf
+ │   ├── variables.tf
+ │   ├── outputs.tf
+ │   ├── terraform.tfvars
+ │   └── backend.hcl.example
+ └── prod/
+  ├── main.tf
+  ├── variables.tf
+  ├── outputs.tf
+  ├── terraform.tfvars
+  └── backend.hcl.example
 ```
 
 ## 3) Giải thích vai trò từng phần
@@ -82,6 +83,7 @@ simple-iac-terraform/
 - `modules/s3`: S3 bucket với baseline bảo mật (public access block, versioning, SSE).
 
 Mỗi module đều có 3 file chuẩn:
+
 - `variables.tf`: input contract của module.
 - `main.tf`: resource implementation.
 - `outputs.tf`: output contract trả về cho root module.
@@ -89,6 +91,7 @@ Mỗi module đều có 3 file chuẩn:
 ### Thư mục `envs/`
 
 Đây là phần quan trọng cho thực tế:
+
 - Mỗi môi trường (`dev`, `stg`, `prod`) là một root module độc lập.
 - Mỗi môi trường có `terraform.tfvars` riêng để tách CIDR/tags/cấu hình.
 - Mỗi môi trường có `backend.hcl.example` để cấu hình remote state key riêng.
@@ -118,6 +121,7 @@ cp backend.hcl.example backend.hcl
 ```
 
 Sửa `backend.hcl` với thông tin thật:
+
 - `bucket`: S3 bucket chứa Terraform state
 - `key`: đã tách theo môi trường (dev/stg/prod)
 - `region`: region chứa backend
@@ -164,6 +168,7 @@ terraform destroy
 ```
 
 Lưu ý:
+
 - NAT Gateway có phát sinh chi phí theo giờ.
 - Nếu S3 bucket có object và `s3_force_destroy = false`, destroy sẽ fail.
 - Có thể xóa object trước hoặc bật `s3_force_destroy = true` cho môi trường lab.
